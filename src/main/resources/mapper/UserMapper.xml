@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demobatis2.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.example.demobatis2.entity.User">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="is_active" jdbcType="BIT" property="isActive"/>
+    </resultMap>
+
+
+    <resultMap id="CustomUserRM" type="com.example.demobatis2.entity.UserCustom">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="is_active" jdbcType="BIT" property="isActive"/>
+        <collection property="roles" ofType="com.example.demobatis2.entity.Role">
+            <id column="role_id" property="id" jdbcType="INTEGER"/>
+            <result column="role_name" jdbcType="VARCHAR" property="name"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="findByUsername" parameterType="String" resultMap="CustomUserRM">
+
+        SELECT
+        s_user.id,
+        s_user.username,
+        s_user.password,
+        s_user.is_active,
+        s_role.`id` role_id,
+        s_role.`name` role_name
+        FROM
+        s_user
+        LEFT JOIN
+        r_user_role
+        ON
+        s_user.`id`=r_user_role.`user_id`
+        LEFT JOIN
+        s_role
+        ON
+        r_user_role.`role_id`=s_role.`id`
+        WHERE
+        s_user.`username`=#{username};
+
+
+  </select>
+
+    <insert id="saveUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO
+    s_user(
+      username,
+      password
+    )
+    VALUES (
+      #{username},
+      #{password}
+    )
+  </insert>
+
+    <insert id="saveUserNRole" parameterType="map">
+        INSERT INTO
+        r_user_role(
+        user_id,
+        role_id
+        )
+        VALUES
+        <foreach collection="roles" item="role" separator=",">
+            (${userId},#{role.id})
+        </foreach>
+    </insert>
+
+
+</mapper>
