@@ -16,5 +16,5 @@ git tag，添加标签
   * git pull origin master  
 3. 将本地仓库修改（或者添加）的内容提交到远程仓库
   * git push origin master  
-`self.view.backgroundColor = [UIColor colorForHex:@"6FBF5E"];`  
+ 
 
