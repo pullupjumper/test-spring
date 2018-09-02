@@ -11,8 +11,10 @@ git branch -d & git branch -D，删除或者强制删除分支
 git tag，添加标签  
 # 操作  
 1. 關聯遠程倉庫
-  + git remote add origin https://github.com/guobinhit/springmvc-tutorial.git  
+  * git remote add origin https://github.com/guobinhit/springmvc-tutorial.git  
 2. 同步远程仓库和本地仓库  
-  + git pull origin master  
+  * git pull origin master  
 3. 将本地仓库修改（或者添加）的内容提交到远程仓库
-  + git push origin master
+  * git push origin master  
+`self.view.backgroundColor = [UIColor colorForHex:@"6FBF5E"];`  
+
